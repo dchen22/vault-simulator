@@ -13,9 +13,22 @@ class User:
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        self.balance = 0
+        self.balance = 0.0
         self.messages = []
         self.items = []
+
+    def display_stats(self):
+        print(f'Username: {self.username}')
+        print(f'Balance: ${self.balance}')
+        if len(self.items) > 0:
+            print(f'Items: {self.items}')
+        else:
+            print('No items to display')
+        if len(self.messages) > 0:
+            print(f'Messages: {self.messages}')
+        else:
+            print('No messages to display')
+        print()
 
 
 class StoreUserAccounts:
@@ -50,15 +63,18 @@ class StoreUserAccounts:
             pickle.dump(self, acc_file)
             # pickle-store this object (which holds a list of all existing users)
 
-    def login(self, username: str, password: str):
+    def login(self, username: str, password: str) -> bool:
         if password == self.existing_accounts[username].password:
             print('----- Log in successful! -----', end='\n\n')
+            return True
         else:
             print('*** Incorrect password. ***', end='\n\n')
+            return False
 
     def delete_account(self, username, password):
-        # TODO
-        pass
+        if self.login(username, password):
+            del self.existing_accounts[username]
+
 
     def _terminate_account(self, username):
-        pass
+        del self.existing_accounts[username]
