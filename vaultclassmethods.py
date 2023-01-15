@@ -18,6 +18,7 @@ class User:
         self.items = []
 
     def display_stats(self):
+        print('|||||||||||||||||      YOUR HOMEPAGE      |||||||||||||||||', end='\n\n')
         print(f'Username: {self.username}')
         print(f'Balance: ${self.balance}')
         if len(self.items) > 0:
@@ -29,6 +30,10 @@ class User:
         else:
             print('No messages to display')
         print()
+        print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||', end='\n\n')
+        print('Type LOGOUT to log out.')
+        while input().lower() != 'logout':
+            pass
 
 
 class StoreUserAccounts:
@@ -64,7 +69,7 @@ class StoreUserAccounts:
             # pickle-store this object (which holds a list of all existing users)
 
     def login(self, username: str, password: str) -> bool:
-        if password == self.existing_accounts[username].password:
+        if username in self.existing_accounts and password == self.existing_accounts[username].password:
             print('----- Log in successful! -----', end='\n\n')
             return True
         else:

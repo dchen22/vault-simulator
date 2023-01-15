@@ -14,17 +14,32 @@ with open('accountsPICKLE.pkl', 'rb') as acc_file:
 
 
 def main():
+    bank_hub_screen()
+
+
+def bank_hub_screen():
     while True:
+        print('''
+----------------------------------------------------------------------------------------------------
+ ___ ___  _______  _____    ______  _______  _______  _______      ______  _______  _______  __  __ 
+|   |   ||   |   ||     |_ |      ||       ||_     _||    |  |    |   __ \|   _   ||    |  ||  |/  |
+|   |   ||   |   ||       ||   ---||   -   | _|   |_ |       |    |   __ <|       ||       ||     < 
+ \_____/ |_______||_______||______||_______||_______||__|____|    |______/|___|___||__|____||__|\__|
+ 
+----------------------------------------------------------------------------------------------------
+        
+Welcome to the VulCoin Bank! 
+        ''')
+
         option = int(input('''Select an action: 
         [1] Log in
         [2] Open an account
-        '''))
+        > '''))
+
         if option == 1:
             log_in_account(input('Enter your username: '), input('Enter your password: '))
         elif option == 2:  # Open a new account
             set_up_account(input('Enter a username: '), input('Enter a password: '))
-        print()
-
 
 def set_up_account(username: str, password: str) -> None:
     running_storage.add_account(User(username, password))
