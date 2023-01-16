@@ -32,15 +32,19 @@ def bank_hub_screen():
 Welcome to the VulCoin Bank! 
         ''')
 
-        option = int(input('''Select an action: 
+        option = input('''Select an action: 
         [1] Log in
         [2] Create an account
-        > '''))
+        [X] Exit
+        > ''')
 
-        if option == 1:
+        if option == '1':
             log_in_account(input('Enter your username: '), input('Enter your password: '))
-        elif option == 2:  # Open a new account
+        elif option == '2':  # Open a new account
             set_up_account(input('Enter a username: '), input('Enter a password: '))
+        elif option.lower() == 'x':
+            print('stay fresh, gamer')
+            exit(-1)
         else:
             print('Invalid option!')
 
