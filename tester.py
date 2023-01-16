@@ -1,3 +1,7 @@
-a = [(1, 2, 5), (4, 6, 23), (-4, 6, 2, 6, 7), (-4, 6, 1, 5)]
-a.sort()
-print(a)
+class A:
+
+    def __init__(self):
+        self.x = 6
+
+a = A()
+print(a.v)

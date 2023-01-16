@@ -7,15 +7,17 @@ class User:
     username: str
     password: str
     balance: float
-    messages: list
+    inbox: list
     items: list[dict]
 
     def __init__(self, username, password):
         self.username = username
         self.password = password
         self.balance = 0.0
-        self.messages = []
+        self.inbox = []
         self.items = []
+        self.sent_requests = []
+        self.incoming_reqs = []
 
     def display_stats(self):
         print('|||||||||||||||||      YOUR HOMEPAGE      |||||||||||||||||', end='\n\n')
@@ -25,10 +27,7 @@ class User:
             print(f'Items: {self.items}')
         else:
             print('No items to display')
-        if len(self.messages) > 0:
-            print(f'Messages: {self.messages}')
-        else:
-            print('No messages to display')
+        print(f'Inbox ({len(self.inbox)})')
         print()
 
     def display_item_stats(self):
@@ -42,6 +41,16 @@ class User:
         # will have a timer based on local clock
         # TODO
         pass
+
+    def update_user_attributes(self):
+
+        try:
+            # self.newattribute = self.oldattribute  # use this to change attribute names
+            # del self.oldattribute  # use this if the attribute is mutable (then you get rid of the old reference),
+            # # otherwise you have two attributes that point to the same thing
+            pass
+        except AttributeError:
+            print(f'{self.username} FAILED')
 
 
 class StoreUserAccounts:
@@ -60,6 +69,8 @@ class StoreUserAccounts:
 
     def __init__(self, existing_accounts):
         self.existing_accounts = existing_accounts
+        self._update_attributes()
+
 
     def add_account(self, new_account):
         '''
@@ -85,6 +96,25 @@ class StoreUserAccounts:
             return False
 
 
+    def request_money(self, account: User, req_username: str):
+        if req_username in self.existing_accounts:
+            desired_amount = float(input('Enter request amount: '))
+            supplement_msg = input('Include message (enter to skip): ')
+            if not supplement_msg:
+                supplement_msg = 'No message included.'
+            self.existing_accounts[req_username].incoming_reqs.append({
+                'Username': account.username,
+                'Amount': desired_amount,
+                'Message': supplement_msg
+            })
+            self.existing_accounts[req_username].inbox.append(
+                f'''{account.username} has sent a money request. Please 
+                    check your inbox for more details.
+                 ''')
+        else:
+            print('User does not exist!')
+
+
     def delete_account(self, username, password):
         if self.login(username, password):
             del self.existing_accounts[username]
@@ -92,3 +122,20 @@ class StoreUserAccounts:
 
     def _terminate_account(self, username):
         del self.existing_accounts[username]
+
+    def _update_attributes(self):
+        '''
+        Invoke this method when you change the attributes of StoreUserAccounts
+        It will reupload the new state of the classes
+
+        '''
+        for account in self.existing_accounts:
+            self.existing_accounts[account].update_user_attributes()
+            # print(self.existing_accounts[account].__dict__)
+
+            # TODO
+            # the user accounts created after the changes will have the new attributes
+            # maybe you can go through all of the old ones and make the necessary changes
+            # maybe do this automatically each time on startup. its slower but it prevents bugs
+        with open('accountsPICKLE.pkl', 'wb') as acc_file:
+            pickle.dump(self, acc_file)

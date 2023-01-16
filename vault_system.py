@@ -78,11 +78,9 @@ def _acc_homepage(account: User):
                 print('No items to display!')
 
         elif option == '2':
-            # TODO
-            pass
-        elif option == '2':
-            # TODO
-            pass
+            print(f'Balance: ${account.balance}')
+        elif option == '3':
+            running_storage.request_money(account, input('Enter their username: '))
         elif option == '2':
             # TODO
             pass
