@@ -8,7 +8,7 @@ class User:
     password: str
     balance: float
     messages: list
-    items: list
+    items: list[dict]
 
     def __init__(self, username, password):
         self.username = username
@@ -30,10 +30,18 @@ class User:
         else:
             print('No messages to display')
         print()
-        print('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||', end='\n\n')
-        print('Type LOGOUT to log out.')
-        while input().lower() != 'logout':
-            pass
+
+    def display_item_stats(self):
+        for item in self.items:
+            for stat in item:
+                print(f'{stat}: {item[stat]}')
+
+    def homepage_actions(self):
+        # users should be able to send trade requests to other users and send/request coins and items, and send messages
+        # should also be able to mine for more Vulcoin (e.g. invest in spaceships that search on other planets), and this
+        # will have a timer based on local clock
+        # TODO
+        pass
 
 
 class StoreUserAccounts:
@@ -75,6 +83,7 @@ class StoreUserAccounts:
         else:
             print('*** Incorrect password. ***', end='\n\n')
             return False
+
 
     def delete_account(self, username, password):
         if self.login(username, password):

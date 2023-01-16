@@ -2,6 +2,7 @@ from typing import TextIO
 import _pickle as pickle
 from vaultclassmethods import User, StoreUserAccounts
 from bisect import bisect_right, bisect_left
+import os
 
 with open('accountsPICKLE.pkl', 'rb') as acc_file:
     try:
@@ -33,25 +34,65 @@ Welcome to the VulCoin Bank!
 
         option = int(input('''Select an action: 
         [1] Log in
-        [2] Open an account
+        [2] Create an account
         > '''))
 
         if option == 1:
             log_in_account(input('Enter your username: '), input('Enter your password: '))
         elif option == 2:  # Open a new account
             set_up_account(input('Enter a username: '), input('Enter a password: '))
+        else:
+            print('Invalid option!')
 
 def set_up_account(username: str, password: str) -> None:
     running_storage.add_account(User(username, password))
 
 
 def log_in_account(username: str, password: str) -> None:
+    opened_account = None  # this is the account that we will be doing stuff in
     if running_storage.login(username, password):  # if login is successful
-        _acc_homepage(running_storage.existing_accounts[username])
+        opened_account = running_storage.existing_accounts[username]
+        _acc_homepage(opened_account)
 
 
 def _acc_homepage(account: User):
-    account.display_stats()
+
+    while True:
+        account.display_stats()
+        option = input('''Select an action:
+        [1] View Items
+        [2] Send money
+        [3] Request money
+        [4] Add Mission
+        [5] View Missions
+        [L] Log out
+        > ''')
+        if option == '1':
+            if len(account.items) > 0:
+                account.display_item_stats()
+            else:
+                print('No items to display!')
+
+        elif option == '2':
+            # TODO
+            pass
+        elif option == '2':
+            # TODO
+            pass
+        elif option == '2':
+            # TODO
+            pass
+        elif option == '2':
+            # TODO
+            pass
+        elif option.lower() == 'l':
+            print('\n' * 80)  # this should clear the screen (kinda???)
+            break
+        else:
+            print('Invalid option!')
+        input('Continue? (enter)')
+        print()
+
 
 
 main()
