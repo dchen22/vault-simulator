@@ -36,6 +36,20 @@ class User:
             for stat in item:
                 print(f'{stat}: {item[stat]}')
 
+
+    def display_inbox(self):
+        for mail in self.inbox:
+            print(mail)
+
+    def display_incoming_reqs(self):
+        for i in range(len(self.incoming_reqs)):
+            print(f'({i+1})')
+            print(f'Incoming Request from {self.incoming_reqs[i]["Username"]}')
+            print(f'Request Amount: {self.incoming_reqs[i]["Amount"]}')
+            print(self.incoming_reqs[i]['Message'])
+            print()
+
+
     def homepage_actions(self):
         # users should be able to send trade requests to other users and send/request coins and items, and send messages
         # should also be able to mine for more Vulcoin (e.g. invest in spaceships that search on other planets), and this
@@ -59,7 +73,7 @@ class StoreUserAccounts:
     '''
     - Must use self._update_attributes() after making any changes to the users stored
     in self.existing_users in order to make sure these changes are saved to pickle
-    
+
     When updating instances of this class, try not to directly reference the object, but
     instead create an entirely new instance and just update it with the existing accounts.
 
@@ -113,9 +127,10 @@ class StoreUserAccounts:
                 'Message': supplement_msg
             })
             self.existing_accounts[req_username].inbox.append(
-                f'''{account.username} has sent a money request. Please 
-                    check your inbox for more details.
-                 ''')
+                f'''
+        {account.username} 
+        has sent you a money request. Please 
+        check your incoming requests for more details.''')
             self._update_attributes()
         else:
             print('User does not exist!')

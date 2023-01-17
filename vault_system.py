@@ -73,7 +73,7 @@ def _acc_homepage(account: User):
         > ''')
         if option == '1':
             if len(account.inbox) > 0:
-                print(account.inbox)
+                account.display_inbox()
             else:
                 print('Your inbox is empty!')
 
@@ -94,7 +94,7 @@ def _acc_homepage(account: User):
             pass
         elif option == '7':
             if len(account.incoming_reqs) > 0:
-                print(account.incoming_reqs)
+                account.display_incoming_reqs()
             else:
                 print('No incoming requests!')
         elif option.lower() == 'l':
