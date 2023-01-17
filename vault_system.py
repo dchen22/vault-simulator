@@ -60,33 +60,43 @@ def log_in_account(username: str, password: str) -> None:
 
 
 def _acc_homepage(account: User):
-
     while True:
         account.display_stats()
         option = input('''Select an action:
-        [1] View Items
-        [2] Send money
+        [1] View Inbox       [7] Incoming Requests
+        [2] Send money       [8] Sent Requests
         [3] Request money
         [4] Add Mission
-        [5] View Missions
+        [5] View Items
+        [6] View Missions
         [L] Log out
         > ''')
         if option == '1':
-            if len(account.items) > 0:
-                account.display_item_stats()
+            if len(account.inbox) > 0:
+                print(account.inbox)
             else:
-                print('No items to display!')
+                print('Your inbox is empty!')
 
         elif option == '2':
             print(f'Balance: ${account.balance}')
         elif option == '3':
             running_storage.request_money(account, input('Enter their username: '))
-        elif option == '2':
+        elif option == '4':
             # TODO
             pass
-        elif option == '2':
+        elif option == '5':
+            if len(account.items) > 0:
+                account.display_item_stats()
+            else:
+                print('No items to display!')
+        elif option == '6':
             # TODO
             pass
+        elif option == '7':
+            if len(account.incoming_reqs) > 0:
+                print(account.incoming_reqs)
+            else:
+                print('No incoming requests!')
         elif option.lower() == 'l':
             print('\n' * 80)  # this should clear the screen (kinda???)
             break
@@ -96,5 +106,5 @@ def _acc_homepage(account: User):
         print()
 
 
-
 main()
+

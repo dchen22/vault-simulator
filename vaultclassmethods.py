@@ -18,6 +18,7 @@ class User:
         self.items = []
         self.sent_requests = []
         self.incoming_reqs = []
+        print('reset lol ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo')
 
     def display_stats(self):
         print('|||||||||||||||||      YOUR HOMEPAGE      |||||||||||||||||', end='\n\n')
@@ -50,11 +51,15 @@ class User:
             # # otherwise you have two attributes that point to the same thing
             pass
         except AttributeError:
-            print(f'{self.username} FAILED')
+            # print(f'{self.username} FAILED')
+            pass
 
 
 class StoreUserAccounts:
     '''
+    - Must use self._update_attributes() after making any changes to the users stored
+    in self.existing_users in order to make sure these changes are saved to pickle
+    
     When updating instances of this class, try not to directly reference the object, but
     instead create an entirely new instance and just update it with the existing accounts.
 
@@ -111,6 +116,7 @@ class StoreUserAccounts:
                 f'''{account.username} has sent a money request. Please 
                     check your inbox for more details.
                  ''')
+            self._update_attributes()
         else:
             print('User does not exist!')
 
